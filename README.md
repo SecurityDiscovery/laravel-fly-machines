@@ -7,27 +7,12 @@
 
 # Package in development. Not recommended for actual usage.
 
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/laravel-fly-machines.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/laravel-fly-machines)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
-
 ## Installation
 
 You can install the package via composer:
 
 ```bash
 composer require securitydiscovery/laravel-fly-machines
-```
-
-You can publish and run the migrations with:
-
-```bash
-php artisan vendor:publish --tag="laravel-fly-machines-migrations"
-php artisan migrate
 ```
 
 You can publish the config file with:
@@ -39,21 +24,35 @@ php artisan vendor:publish --tag="laravel-fly-machines-config"
 This is the contents of the published config file:
 
 ```php
+// config for SecurityDiscovery/LaravelFlyMachines
 return [
+    'proto' => env('FLY_API_PROTO', 'http'),
+    // The endpoint to the Fly machines API.
+    'endpoint' => env('FLY_API_HOSTNAME', '127.0.0.1:4280'),
+    // The token to authenticate to the API.
+    'token' => env('FLY_API_TOKEN'),
 ];
-```
 
-Optionally, you can publish the views using
-
-```bash
-php artisan vendor:publish --tag="laravel-fly-machines-views"
 ```
 
 ## Usage
 
 ```php
 $laravelFlyMachines = new SecurityDiscovery\LaravelFlyMachines();
-echo $laravelFlyMachines->echoPhrase('Hello, SecurityDiscovery!');
+
+// List Fly machines...
+$machines = $laravelFlyMachines->machines('my-fly-app')->list();
+
+// Create a Fly machine...
+$machine = $laravelFlyMachines->machines('my-fly-app')->create([
+    'name' => 'this-is-my-machine-name'
+    'config' => [] // @TODO add example fly machine config! REQUIRED
+]);
+
+$machine = $laravelFlyMachines->machines('my-fly-app')->get('my.machine-id');
+// Delete a Fly machine...
+// Note: The machine id != machine name.
+$laravelFlyMachines->machines('my-fly-app')->delete('my-machine-id');
 ```
 
 ## Testing
