@@ -18,4 +18,11 @@ class LaravelFlyMachinesServiceProvider extends PackageServiceProvider
             ->name('laravel-fly-machines')
             ->hasConfigFile();
     }
+
+    public function packageRegistered(): void
+    {
+        $this->app->bind('laravel-fly-machines', function () {
+            return new LaravelFlyMachines();
+        });
+    }
 }
