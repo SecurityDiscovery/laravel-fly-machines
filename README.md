@@ -49,6 +49,7 @@ $machine = $laravelFlyMachines->machines('my-fly-app')->create([
     'config' => [] // @TODO add example fly machine config! REQUIRED
 ]);
 
+// Get a Fly machine by their machine id.
 $machine = $laravelFlyMachines->machines('my-fly-app')->get('my.machine-id');
 // Delete a Fly machine...
 // Note: The machine id != machine name.
