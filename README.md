@@ -38,23 +38,24 @@ return [
 ## Usage
 
 ```php
-$laravelFlyMachines = new SecurityDiscovery\LaravelFlyMachines();
+
+use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines;
 
 // List Fly machines...
-$machines = $laravelFlyMachines->machines('my-fly-app')->list();
+$machines = LaravelFlyMachines::machines('my-fly-app')->list();
 
 // Create a Fly machine...
-$machine = $laravelFlyMachines->machines('my-fly-app')->create([
+$machine = LaravelFlyMachines::machines('my-fly-app')->create([
     'name' => 'this-is-my-machine-name'
     'config' => [] // @TODO add example fly machine config! REQUIRED
 ]);
 
 // Get a Fly machine by their machine id.
-$machine = $laravelFlyMachines->machines('my-fly-app')->get('my.machine-id');
+$machine = LaravelFlyMachines::machines('my-fly-app')->get('my.machine-id');
 
 // Delete a Fly machine...
 // Note: The machine id != machine name.
-$laravelFlyMachines->machines('my-fly-app')->delete('my-machine-id');
+LaravelFlyMachines::machines('my-fly-app')->delete('my-machine-id');
 ```
 
 ## Testing
