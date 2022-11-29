@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace SecurityDiscovery\LaravelFlyMachines\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class LaravelFlyMachinesCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'laravel-fly-machines';
 
     public $description = 'My command';
 
