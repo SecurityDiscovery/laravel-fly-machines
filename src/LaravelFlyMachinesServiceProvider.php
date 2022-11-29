@@ -4,7 +4,6 @@ namespace SecurityDiscovery\LaravelFlyMachines;
 
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
-use SecurityDiscovery\LaravelFlyMachines\Commands\LaravelFlyMachinesCommand;
 
 class LaravelFlyMachinesServiceProvider extends PackageServiceProvider
 {
@@ -17,9 +16,6 @@ class LaravelFlyMachinesServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('laravel-fly-machines')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_laravel-fly-machines_table')
-            ->hasCommand(LaravelFlyMachinesCommand::class);
+            ->hasConfigFile();
     }
 }
