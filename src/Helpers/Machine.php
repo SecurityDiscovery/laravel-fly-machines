@@ -148,10 +148,11 @@ class Machine
             'guest' => $this->guest,
         ];
 
-        if ($this->init && count($this->init) > 0) {
+        if (count($this->init) > 0) {
             $config['init'] = $this->init;
         }
-        if ($this->env && count($this->env) > 0) {
+
+        if (count($this->env) > 0) {
             $config['env'] = $this->env;
         }
 
