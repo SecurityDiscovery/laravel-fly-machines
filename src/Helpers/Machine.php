@@ -42,10 +42,9 @@ class Machine
     /**
      * @param  string  $image The docker image
      */
-    public function __construct(string $image, string $default_cpu_kind = 'shared')
+    public function __construct(string $image)
     {
         $this->image = $image;
-        $this->guest = ['cpu_kind' => $default_cpu_kind];
     }
 
     /**

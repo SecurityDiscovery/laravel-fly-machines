@@ -71,23 +71,24 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machine = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
-    ->setName(name: 'my_container')
+    ->setName(name: 'my_container') // Optional
     ->setEnvironmentVariable(
         name: 'ENV_NAME_1',
         value: 'I AM THE VALUE'
-    )
+    ) // Optional
     ->setEnvironmentVariable(
         name : 'ENV_NAME_2',
         value: 'I AM THE VALUE 2'
-    )
+    ) // Optional
     ->setMaxRetries(
         max_retries: 3,
         policy: 'on-failure',
-    )
-    ->setRegion(region: 'fra') // Frankfurt
-    ->setCPUs(cpus: 1)
-    ->setMemory(memory_mb: 2*256)
-    ->setInitCmd(['/bin/something', 'something'])
+    ) // Optional
+    ->setRegion(region: 'fra') // Optional. Frankfurt
+    ->setCPUs(cpus: 1) // Optional.
+    ->setMemory(memory_mb: 2*256) // Optional. Not set by default.
+    ->setCPUKind(cpu_kind: 'shared') // Optional. Default is set to 'shared' in class.
+    ->setInitCmd(['/bin/something', 'something']) // Optional.
     ->getConfig();
     
 // e.g. use the above config to create a machine
