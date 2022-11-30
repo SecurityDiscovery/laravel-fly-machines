@@ -43,13 +43,13 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machine = (new Machine("registry-1.docker.io/flyio/postgres:14.4"))
-    ->setEnvironmentVariable("ENV_NAME_1", "I AM THE VALUE")
-    ->setEnvironmentVariable("ENV_NAME_2", "I AM THE VALUE 2")
-    ->setMaxRetries(3)
-    ->setRegion("fra") // Frankfurt
-    ->setGuestCpus(1)
-    ->setGuestMemory(2*256)
-    ->setInitCmd(["/bin/something", "something"])
+    ->setEnvironmentVariable("ENV_NAME_1", "I AM THE VALUE") // Optional.
+    ->setEnvironmentVariable("ENV_NAME_2", "I AM THE VALUE 2") // Optional.
+    ->setMaxRetries(3) // Optional.
+    ->setRegion("fra") // Optional. Frankfurt
+    ->setGuestCpus(1) // Optional.
+    ->setGuestMemory(2*256) // Optional.
+    ->setInitCmd(["/bin/something", "something"]) // Optional.
     ->getConfig();
     
 // e.g. use the above config to create a machine
