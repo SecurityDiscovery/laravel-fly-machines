@@ -141,6 +141,19 @@ class Machine
     }
 
     /**
+     * Set the CPU kind of the guest system.
+     *
+     * @param  string  $cpu_kind The CPU kind of the system. Example: shared.
+     * @return $this
+     */
+    public function setCpuKind(string $cpu_kind): static
+    {
+        $this->guest['cpu_kind'] = $cpu_kind;
+
+        return $this;
+    }
+
+    /**
      * Set the Fly.io region.
      *
      * @param  string  $region
@@ -163,10 +176,16 @@ class Machine
         $config = [
             'config' => [
                 'image' => $this->image,
-                'restart' => $this->restart,
-                'guest' => $this->guest,
             ],
         ];
+
+        if (count($this->restart) > 0) {
+            $config['config']['restart'] = $this->restart;
+        }
+
+        if (count($this->guest) > 0) {
+            $config['config']['guest'] = $this->guest;
+        }
 
         if (count($this->init) > 0) {
             $config['config']['init'] = $this->init;
