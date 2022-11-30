@@ -84,7 +84,7 @@ $machine = FlyMachines::machines('my-fly-app')->create([
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
-$machine = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
+$machineConfig = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
     ->setName(name: 'my_container') // Optional
     ->setEnvironmentVariable(
         name: 'ENV_NAME_1',
@@ -106,8 +106,8 @@ $machine = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
     ->getConfig();
     
 // e.g. use the above config to create a machine
-FlyMachines::machines('my-fly-app')->create($machine);
-dd($machine);
+FlyMachines::machines('my-fly-app')->create($machineConfig);
+dd($machineConfig);
 
 array:3 [▼ // routes/web.php:41
   "config" => array:5 [▼
