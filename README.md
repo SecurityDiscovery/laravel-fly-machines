@@ -58,20 +58,20 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 FlyMachines::machines('my-fly-app')->delete('148e127...');
 ```
 
-#### Create a Fly.io machine
+#### Launch a Fly.io machine
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machineConfig = new Machine(image: 'registry-1.docker.io/flyio/postgres:14.4');
-$machine = FlyMachines::machines('my-fly-app')->create($machineConfig->getConfig());
+$machine = FlyMachines::machines('my-fly-app')->launch($machineConfig->getConfig());
 ```
 
-#### Create a Fly.io machine without the helper
+#### Launch a Fly.io machine without the helper
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
-$machine = FlyMachines::machines('my-fly-app')->create([
+$machine = FlyMachines::machines('my-fly-app')->launch([
     'config' => [
         'image' => 'registry-1.docker.io/flyio/postgres:14.4',
     ],
@@ -97,7 +97,7 @@ $machineConfig = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
     ->getConfig();
     
 // e.g. use the above config to create a machine
-FlyMachines::machines('my-fly-app')->create($machineConfig);
+FlyMachines::machines('my-fly-app')->launch($machineConfig);
 dd($machineConfig);
 
 array:3 [▼

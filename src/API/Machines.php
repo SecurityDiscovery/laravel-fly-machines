@@ -34,23 +34,43 @@ class Machines
     }
 
     /**
-     * Create a Fly machine.
+     * Launch a Fly machine.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function create(array $machine)
+    public function launch(array $machine)
     {
         return $this->client->post('/machines', $machine)->throw()->json();
     }
 
     /**
-     * Get a Fly machine by their machine id.
+     * Get a Fly machine using the machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function get(string $machineId)
     {
         return $this->client->get('/machines/'.$machineId)->throw()->json();
+    }
+
+    /**
+     * Stop a Fly machine using the machine id.
+     *
+     * @throws \Illuminate\Http\Client\RequestException
+     */
+    public function stop(string $machineId)
+    {
+        return $this->client->post('/machines/'.$machineId.'/stop')->throw()->json();
+    }
+
+    /**
+     * Start a Fly machine using the machine id.
+     *
+     * @throws \Illuminate\Http\Client\RequestException
+     */
+    public function start(string $machineId)
+    {
+        return $this->client->post('/machines/'.$machineId.'/start')->throw()->json();
     }
 
     /**
