@@ -49,8 +49,8 @@ $machine = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
         value: 'I AM THE VALUE'
     )
     ->setEnvironmentVariable(
-        name : 'ENV_NAME_1',
-        value: 'I AM THE VALUE'
+        name : 'ENV_NAME_2',
+        value: 'I AM THE VALUE 2'
     )
     ->setMaxRetries(
         max_retries: 3,
@@ -86,6 +86,7 @@ array:3 [▼ // routes/web.php:41
     ]
     "env" => array:1 [▼
       "ENV_NAME_1" => "I AM THE VALUE"
+      "ENV_NAME_2" => "I AM THE VALUE 2"
     ]
   ]
   "region" => "fra"
