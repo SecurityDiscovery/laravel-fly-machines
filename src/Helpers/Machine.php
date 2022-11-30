@@ -37,14 +37,15 @@ class Machine
     /**
      * @var array The machine itself. Cpu, Memory etc.
      */
-    private array $guest = ['cpu_kind' => 'shared'];
+    private array $guest = [];
 
     /**
      * @param  string  $image The docker image
      */
-    public function __construct(string $image)
+    public function __construct(string $image, string $default_cpu_kind = 'shared')
     {
         $this->image = $image;
+        $this->guest = ['cpu_kind' => $default_cpu_kind];
     }
 
     /**
@@ -120,7 +121,7 @@ class Machine
      * @param  int  $cpus The count of CPUs.
      * @return $this
      */
-    public function setGuestCpus(int $cpus): static
+    public function setCPUs(int $cpus): static
     {
         $this->guest['cpus'] = $cpus;
 
@@ -133,7 +134,7 @@ class Machine
      * @param  int  $memory_mb The memory in megabytes.
      * @return $this
      */
-    public function setGuestMemory(int $memory_mb): static
+    public function setMemory(int $memory_mb): static
     {
         $this->guest['memory_mb'] = $memory_mb;
 
@@ -146,7 +147,7 @@ class Machine
      * @param  string  $cpu_kind The CPU kind of the system. Example: shared.
      * @return $this
      */
-    public function setCpuKind(string $cpu_kind): static
+    public function setCPUKind(string $cpu_kind): static
     {
         $this->guest['cpu_kind'] = $cpu_kind;
 
