@@ -64,7 +64,7 @@ $firstMachineId = $allMachines[0]['id']; // e.g. save the id in a db
 $firstMachine = FlyMachines::machines('securitydiscovery-db')->get($firstMachineId);
 ```
 
-### Example Response of get() or list() as `json_encode()`
+### Example `FlyMachines::machines('my-fly-app')->get('my-machine-id')`
 ```php
 echo json_encode(FlyMachines::machines('my-fly-app')->get('my-machine-id'));
 ```
