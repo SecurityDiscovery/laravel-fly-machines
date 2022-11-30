@@ -37,32 +37,45 @@ return [
 
 ## Usage
 
-
+#### List Fly.io machines
 ```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
-use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+$machines = FlyMachines::machines('my-fly-app')->list();
+```
+
+#### Get a Fly.io machine by their id
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+
+$machines = FlyMachines::machines('my-fly-app')->get('148e127...');
+```
+
+#### Delete a Fly.io machine by their id
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+
+$machines = FlyMachines::machines('my-fly-app')->delete('148e127...');
+```
+
+#### Create a Fly.io machine
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
-// List Fly machines...
-$machines = FlyMachines::machines('my-fly-app')->list();
-
-// Create a Fly machine...
-// You might want to use the helper class to generate a Machine.
 $machineConfig = new Machine(image: 'registry-1.docker.io/flyio/postgres:14.4');
 $machine = FlyMachines::machines('my-fly-app')->create($machineConfig->getConfig());
+```
 
-// Get a Fly machine by their machine id.
-$machine = FlyMachines::machines('my-fly-app')->get('my-machine-id');
+#### Create a Fly.io machine without the helper
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
-// Delete a Fly machine...
-// Note: The machine id != machine name.
-FlyMachines::machines('my-fly-app')->delete('my-machine-id');
-
-
-// E.g. can be useful to check the state of the machine later.
-$allMachines = FlyMachines::machines('securitydiscovery-db')->list();
-$firstMachineId = $allMachines[0]['id']; // e.g. save the id in a db
-$firstMachine = FlyMachines::machines('securitydiscovery-db')->get($firstMachineId);
+$machine = FlyMachines::machines('my-fly-app')->create([
+    'config' => [
+        'image' => 'registry-1.docker.io/flyio/postgres:14.4',
+    ]
+]);
 ```
 
 ### Fly Machine Helper
