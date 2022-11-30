@@ -42,42 +42,54 @@ return [
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
-$machine = (new Machine("registry-1.docker.io/flyio/postgres:14.4"))
-    ->setEnvironmentVariable("ENV_NAME_1", "I AM THE VALUE") // Optional.
-    ->setEnvironmentVariable("ENV_NAME_2", "I AM THE VALUE 2") // Optional.
-    ->setMaxRetries(3) // Optional.
-    ->setRegion("fra") // Optional. Frankfurt
-    ->setGuestCpus(1) // Optional.
-    ->setGuestMemory(2*256) // Optional.
-    ->setInitCmd(["/bin/something", "something"]) // Optional.
+$machine = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
+    ->setName(name: 'my_container')
+    ->setEnvironmentVariable(
+        name: 'ENV_NAME_1',
+        value: 'I AM THE VALUE'
+    )
+    ->setEnvironmentVariable(
+        name : 'ENV_NAME_1',
+        value: 'I AM THE VALUE'
+    )
+    ->setMaxRetries(
+        max_retries: 3,
+        policy: 'on-failure',
+    )
+    ->setRegion(region: 'fra') // Frankfurt
+    ->setCPUs(cpus: 1)
+    ->setMemory(memory_mb: 2*256)
+    ->setInitCmd(['/bin/something', 'something'])
     ->getConfig();
     
 // e.g. use the above config to create a machine
 FlyMachines::machines('my-fly-app')->create($machine);
 dd($machine);
 
-array:6 [▼
-  "image" => "registry-1.docker.io/flyio/postgres:14.4"
-  "restart" => array:2 [▼
-    "max_retries" => 3
-    "policy" => "on-failure"
-  ]
-  "guest" => array:3 [▼
-    "cpu_kind" => "shared"
-    "cpus" => 1
-    "memory_mb" => 512
-  ]
-  "init" => array:1 [▼
-    "cmd" => array:2 [▼
-      0 => "/bin/something"
-      1 => "something"
+array:3 [▼ // routes/web.php:41
+  "config" => array:5 [▼
+    "image" => "registry-1.docker.io/flyio/postgres:14.4"
+    "restart" => array:2 [▼
+      "max_retries" => 3
+      "policy" => "on-failure"
+    ]
+    "guest" => array:3 [▼
+      "cpu_kind" => "shared"
+      "cpus" => 1
+      "memory_mb" => 512
+    ]
+    "init" => array:1 [▼
+      "cmd" => array:2 [▼
+        0 => "/bin/something"
+        1 => "something"
+      ]
+    ]
+    "env" => array:1 [▼
+      "ENV_NAME_1" => "I AM THE VALUE"
     ]
   ]
-  "env" => array:2 [▼
-    "ENV_NAME_1" => "I AM THE VALUE"
-    "ENV_NAME_2" => "I AM THE VALUE 2"
-  ]
   "region" => "fra"
+  "name" => "my_container"
 ]
 ```
 
