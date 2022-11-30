@@ -81,6 +81,7 @@ class Machines
     public function destroy(string $machineId, bool $kill)
     {
         $urlParameters = http_build_query(['kill' => $kill]);
+
         return $this->client->delete('/machines/'.$machineId.'?'.$urlParameters)->throw()->json();
     }
 }
