@@ -37,6 +37,34 @@ return [
 
 ## Usage
 
+
+```php
+
+use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
+
+// List Fly machines...
+$machines = FlyMachines::machines('my-fly-app')->list();
+
+// Create a Fly machine...
+// You might want to use the helper class to generate a Machine.
+$machineConfig = new Machine('registry-1.docker.io/flyio/postgres:14.4');
+$machine = FlyMachines::machines('my-fly-app')->create($machineConfig->getConfig());
+
+// Get a Fly machine by their machine id.
+$machine = FlyMachines::machines('my-fly-app')->get('my-machine-id');
+
+// Delete a Fly machine...
+// Note: The machine id != machine name.
+FlyMachines::machines('my-fly-app')->delete('my-machine-id');
+
+
+// E.g. can be useful to check the state of the machine later.
+$allMachines = FlyMachines::machines('securitydiscovery-db')->list();
+$firstMachineId = $allMachines[0]['id']; // e.g. save the id in a db
+$firstMachine = FlyMachines::machines('securitydiscovery-db')->get($firstMachineId);
+```
+
 ### Fly Machine Helper
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
@@ -92,33 +120,6 @@ array:3 [▼ // routes/web.php:41
   "region" => "fra"
   "name" => "my_container"
 ]
-```
-
-```php
-
-use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
-
-// List Fly machines...
-$machines = FlyMachines::machines('my-fly-app')->list();
-
-// Create a Fly machine...
-$machine = FlyMachines::machines('my-fly-app')->create([
-    'name' => 'this-is-my-machine-name' // Not required per official Fly.io documentation. Fly will generate a name for you
-    'config' => [] // @TODO add example fly machine config! REQUIRED
-]);
-
-// Get a Fly machine by their machine id.
-$machine = FlyMachines::machines('my-fly-app')->get('my-machine-id');
-
-// Delete a Fly machine...
-// Note: The machine id != machine name.
-FlyMachines::machines('my-fly-app')->delete('my-machine-id');
-
-
-// E.g. can be useful to check the state of the machine later.
-$allMachines = FlyMachines::machines('securitydiscovery-db')->list();
-$firstMachineId = $allMachines[0]['id']; // e.g. save the id in a db
-$firstMachine = FlyMachines::machines('securitydiscovery-db')->get($firstMachineId);
 ```
 
 ### Example `FlyMachines::machines('my-fly-app')->get('my-machine-id')`
