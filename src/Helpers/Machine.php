@@ -1,0 +1,133 @@
+<?php
+
+namespace SecurityDiscovery\LaravelFlyMachines\Helpers;
+
+class Machine
+{
+    /**
+     * @var string The docker image
+     */
+    private string $image;
+
+    /**
+     * @var array Environment variables
+     */
+    private array $env = [];
+
+    /**
+     * @var array The restart policy
+     */
+    private array $restart = [];
+
+    /**
+     * @var array The container initial command.
+     */
+    private array $init = [];
+
+    /**
+     * @var array The machine itself. Cpu, Memory etc.
+     */
+    private array $guest = ['cpu_kind' => 'shared'];
+
+    /**
+     * Set the image of the Fly machine.
+     *
+     * @param  string  $image
+     * @return $this
+     */
+    public function setImage(string $image): static
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Set the maximum retries of a container.
+     *
+     * @param  int  $max_retries
+     * @return $this
+     */
+    public function setMaxRetries(int $max_retries): static
+    {
+        $this->restart['max_retries'] = $max_retries;
+        $this->restart['policy'] = 'on-failure';
+
+        return $this;
+    }
+
+    /**
+     * Set an environment variable.
+     *
+     * @param  string  $name The environment variable name
+     * @param  string  $value The environment variable value
+     * @return $this
+     */
+    public function setEnvironmentVariable(string $name, string $value): static
+    {
+        $this->env[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Set init cmd.
+     *
+     * @param  array  $args
+     * @return $this
+     */
+    public function setInitCmd(array $args): static
+    {
+        $this->init['cmd'] = $args;
+
+        return $this;
+    }
+
+    /**
+     * Set the CPU count of the guest system.
+     *
+     * @param  int  $cpus The count of CPUs.
+     * @return $this
+     */
+    public function setGuestCpus(int $cpus): static
+    {
+        $this->guest['cpus'] = $cpus;
+
+        return $this;
+    }
+
+    /**
+     * Set the CPU count of the guest system.
+     *
+     * @param  int  $memory_mb The memory in megabytes.
+     * @return $this
+     */
+    public function setGuestMemory(int $memory_mb): static
+    {
+        $this->guest['memory_mb'] = $memory_mb;
+
+        return $this;
+    }
+
+    /**
+     * Build the configuration. Useful for creating a Machine.
+     * @return array
+     */
+    public function getConfig(): array
+    {
+        $config = [
+            'image' => $this->image,
+            'restart' => $this->restart,
+            'guest' => $this->guest,
+        ];
+
+        if ($this->init && count($this->init) > 0) {
+            $config['init'] = $this->init;
+        }
+        if ($this->env && count($this->env) > 0) {
+            $config['env'] = $this->env;
+        }
+
+        return $config;
+    }
+}
