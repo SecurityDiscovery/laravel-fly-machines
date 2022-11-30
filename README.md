@@ -18,7 +18,7 @@ composer require securitydiscovery/laravel-fly-machines
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="laravel-fly-machines-config"
+php artisan vendor:publish --tag="fly-machines-config"
 ```
 
 This is the contents of the published config file:
