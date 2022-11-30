@@ -37,6 +37,15 @@ return [
 
 ## Usage
 
+#### Functions
+- list()
+- launch($machineConfig)
+- get("machineId")
+- start("machineId")
+- stop("machineId")
+- delete("machineId")
+
+
 #### List Fly.io machines
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
