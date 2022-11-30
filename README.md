@@ -56,7 +56,7 @@ $machine = (new Machine("registry-1.docker.io/flyio/postgres:14.4"))
 FlyMachines::machines('my-fly-app')->create($machine);
 dd($machine);
 
-array:6 [▼ // routes/web.php:31
+array:6 [▼
   "image" => "registry-1.docker.io/flyio/postgres:14.4"
   "restart" => array:2 [▼
     "max_retries" => 3
