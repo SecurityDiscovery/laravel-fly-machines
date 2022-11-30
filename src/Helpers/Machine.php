@@ -10,6 +10,11 @@ class Machine
     private string $image;
 
     /**
+     * @var string The Machine name
+     */
+    private string $name = '';
+
+    /**
      * @var string The Fly.io region.
      */
     private string $region = '';
@@ -56,15 +61,28 @@ class Machine
     }
 
     /**
+     * Set the image of the Fly machine.
+     *
+     * @param  string  $name
+     * @return $this
+     */
+    public function setName(string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * Set the maximum retries of a container.
      *
      * @param  int  $max_retries
      * @return $this
      */
-    public function setMaxRetries(int $max_retries): static
+    public function setMaxRetries(int $max_retries, string $policy = 'on-failure'): static
     {
         $this->restart['max_retries'] = $max_retries;
-        $this->restart['policy'] = 'on-failure';
+        $this->restart['policy'] = $policy;
 
         return $this;
     }
@@ -143,21 +161,27 @@ class Machine
     public function getConfig(): array
     {
         $config = [
-            'image' => $this->image,
-            'restart' => $this->restart,
-            'guest' => $this->guest,
+            'config' => [
+                'image' => $this->image,
+                'restart' => $this->restart,
+                'guest' => $this->guest,
+            ],
         ];
 
         if (count($this->init) > 0) {
-            $config['init'] = $this->init;
+            $config['config']['init'] = $this->init;
         }
 
         if (count($this->env) > 0) {
-            $config['env'] = $this->env;
+            $config['config']['env'] = $this->env;
         }
 
         if (strlen($this->region) > 0) {
             $config['region'] = $this->region;
+        }
+
+        if (strlen($this->name) > 0) {
+            $config['name'] = $this->name;
         }
 
         return $config;
