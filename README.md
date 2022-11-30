@@ -37,6 +37,50 @@ return [
 
 ## Usage
 
+### Fly Machine Helper
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
+
+$machine = (new Machine("registry-1.docker.io/flyio/postgres:14.4"))
+    ->setEnvironmentVariable("ENV_NAME_1", "I AM THE VALUE")
+    ->setEnvironmentVariable("ENV_NAME_2", "I AM THE VALUE 2")
+    ->setMaxRetries(3)
+    ->setRegion("fra") // Frankfurt
+    ->setGuestCpus(1)
+    ->setGuestMemory(2*256)
+    ->setInitCmd(["/bin/something", "something"])
+    ->getConfig();
+    
+// e.g. use the above config to create a machine
+FlyMachines::machines('my-fly-app')->create($machine);
+dd($machine);
+
+array:6 [▼ // routes/web.php:31
+  "image" => "registry-1.docker.io/flyio/postgres:14.4"
+  "restart" => array:2 [▼
+    "max_retries" => 3
+    "policy" => "on-failure"
+  ]
+  "guest" => array:3 [▼
+    "cpu_kind" => "shared"
+    "cpus" => 1
+    "memory_mb" => 512
+  ]
+  "init" => array:1 [▼
+    "cmd" => array:2 [▼
+      0 => "/bin/something"
+      1 => "something"
+    ]
+  ]
+  "env" => array:2 [▼
+    "ENV_NAME_1" => "I AM THE VALUE"
+    "ENV_NAME_2" => "I AM THE VALUE 2"
+  ]
+  "region" => "fra"
+]
+```
+
 ```php
 
 use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
