@@ -44,7 +44,7 @@ $machines = FlyMachines::machines('my-fly-app')->list();
 
 // Create a Fly machine...
 $machine = FlyMachines::machines('my-fly-app')->create([
-    'name' => 'this-is-my-machine-name'
+    'name' => 'this-is-my-machine-name' // Not required per official Fly.io documentation. Fly will generate a name for you
     'config' => [] // @TODO add example fly machine config! REQUIRED
 ]);
 
