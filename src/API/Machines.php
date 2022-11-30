@@ -78,8 +78,9 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function delete(string $machineId)
+    public function destroy(string $machineId, bool $kill)
     {
-        return $this->client->delete('/machines/'.$machineId)->throw()->json();
+        $urlParameters = http_build_query(['kill' => $kill]);
+        return $this->client->delete('/machines/'.$machineId.'?'.$urlParameters)->throw()->json();
     }
 }
