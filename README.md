@@ -86,18 +86,9 @@ use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machineConfig = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
     ->setName(name: 'my_container') // Optional
-    ->setEnvironmentVariable(
-        name: 'ENV_NAME_1',
-        value: 'I AM THE VALUE'
-    ) // Optional
-    ->setEnvironmentVariable(
-        name : 'ENV_NAME_2',
-        value: 'I AM THE VALUE 2'
-    ) // Optional
-    ->setMaxRetries(
-        max_retries: 3,
-        policy: 'on-failure',
-    ) // Optional
+    ->setEnvironmentVariable(name: 'ENV_NAME_1', value: 'I AM THE VALUE') // Optional
+    ->setEnvironmentVariable(name: 'ENV_NAME_2', value: 'I AM THE VALUE 2') // Optional
+    ->setMaxRetries(max_retries: 3, policy: 'on-failure') // Optional
     ->setRegion(region: 'fra') // Optional. Frankfurt
     ->setCPUs(cpus: 1) // Optional.
     ->setMemory(memory_mb: 2*256) // Optional. Not set by default.
