@@ -5,8 +5,6 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/workflow/status/securitydiscovery/laravel-fly-machines/Fix%20PHP%20code%20style%20issues?label=code%20style)](https://github.com/securitydiscovery/laravel-fly-machines/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/securitydiscovery/laravel-fly-machines.svg?style=flat-square)](https://packagist.org/packages/securitydiscovery/laravel-fly-machines)
 
-# Package in development. Not recommended for actual usage.
-
 ## Installation
 
 You can install the package via composer:
@@ -39,23 +37,29 @@ return [
 
 ```php
 
-use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines;
+use \SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
 // List Fly machines...
-$machines = LaravelFlyMachines::machines('my-fly-app')->list();
+$machines = FlyMachines::machines('my-fly-app')->list();
 
 // Create a Fly machine...
-$machine = LaravelFlyMachines::machines('my-fly-app')->create([
+$machine = FlyMachines::machines('my-fly-app')->create([
     'name' => 'this-is-my-machine-name'
     'config' => [] // @TODO add example fly machine config! REQUIRED
 ]);
 
 // Get a Fly machine by their machine id.
-$machine = LaravelFlyMachines::machines('my-fly-app')->get('my.machine-id');
+$machine = FlyMachines::machines('my-fly-app')->get('my.machine-id');
 
 // Delete a Fly machine...
 // Note: The machine id != machine name.
-LaravelFlyMachines::machines('my-fly-app')->delete('my-machine-id');
+FlyMachines::machines('my-fly-app')->delete('my-machine-id');
+
+
+// E.g. can be useful to check the state of the machine later.
+$allMachines = FlyMachines::machines('securitydiscovery-db')->list();
+$firstMachineId = $allMachines[0]['id']; // e.g. save the id in a db
+$firstMachine = FlyMachines::machines('securitydiscovery-db')->get($firstMachineId);
 ```
 
 ## Testing
