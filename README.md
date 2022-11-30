@@ -48,7 +48,7 @@ $machines = FlyMachines::machines('my-fly-app')->list();
 
 // Create a Fly machine...
 // You might want to use the helper class to generate a Machine.
-$machineConfig = new Machine('registry-1.docker.io/flyio/postgres:14.4');
+$machineConfig = new Machine(image: 'registry-1.docker.io/flyio/postgres:14.4');
 $machine = FlyMachines::machines('my-fly-app')->create($machineConfig->getConfig());
 
 // Get a Fly machine by their machine id.
