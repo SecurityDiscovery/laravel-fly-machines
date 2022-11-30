@@ -109,7 +109,7 @@ $machineConfig = (new Machine('registry-1.docker.io/flyio/postgres:14.4'))
 FlyMachines::machines('my-fly-app')->create($machineConfig);
 dd($machineConfig);
 
-array:3 [▼ // routes/web.php:41
+array:3 [▼
   "config" => array:5 [▼
     "image" => "registry-1.docker.io/flyio/postgres:14.4"
     "restart" => array:2 [▼
