@@ -10,6 +10,11 @@ class Machine
     private string $image;
 
     /**
+     * @var string The Fly.io region.
+     */
+    private string $region = '';
+
+    /**
      * @var array Environment variables
      */
     private array $env = [];
@@ -28,6 +33,14 @@ class Machine
      * @var array The machine itself. Cpu, Memory etc.
      */
     private array $guest = ['cpu_kind' => 'shared'];
+
+    /**
+     * @param  string  $image The docker image
+     */
+    public function __construct(string $image)
+    {
+        $this->image = $image;
+    }
 
     /**
      * Set the image of the Fly machine.
@@ -110,7 +123,21 @@ class Machine
     }
 
     /**
+     * Set the Fly.io region.
+     *
+     * @param  string  $region
+     * @return $this
+     */
+    public function setRegion(string $region): static
+    {
+        $this->region = $region;
+
+        return $this;
+    }
+
+    /**
      * Build the configuration. Useful for creating a Machine.
+     *
      * @return array
      */
     public function getConfig(): array
@@ -126,6 +153,10 @@ class Machine
         }
         if ($this->env && count($this->env) > 0) {
             $config['env'] = $this->env;
+        }
+
+        if (strlen($this->region) > 0) {
+            $config['region'] = $this->region;
         }
 
         return $config;

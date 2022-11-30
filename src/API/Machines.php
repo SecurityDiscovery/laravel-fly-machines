@@ -11,20 +11,21 @@ class Machines
 
     public function __construct(string $appName)
     {
-        $baseUrl = sprintf("%s://%s/v1/apps/%s",
+        $baseUrl = sprintf('%s://%s/v1/apps/%s',
             config('fly-machines.proto'),
             config('fly-machines.endpoint'),
             $appName
         );
         $this->client = Http::withHeaders([
-                'Authorization' => 'Bearer '.config('fly-machines.token'),
-            ])
+            'Authorization' => 'Bearer '.config('fly-machines.token'),
+        ])
             ->acceptJson()
             ->baseUrl($baseUrl);
     }
 
     /**
      * List Machines of a Fly.io App.
+     *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function list()
@@ -34,6 +35,7 @@ class Machines
 
     /**
      * Create a Fly machine.
+     *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function create(array $machine)
@@ -43,6 +45,7 @@ class Machines
 
     /**
      * Get a Fly machine by their machine id.
+     *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function get(string $machineId)
@@ -52,6 +55,7 @@ class Machines
 
     /**
      * Delete a Fly machine by their machine id.
+     *
      * @throws \Illuminate\Http\Client\RequestException
      */
     public function delete(string $machineId)

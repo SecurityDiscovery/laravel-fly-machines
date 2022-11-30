@@ -220,6 +220,41 @@ echo json_encode(FlyMachines::machines('my-fly-app')->get('my-machine-id'));
 }
 ```
 
+### Example Create Machine
+```json
+{
+  "name": "machine-syd",
+  "config": {
+    "image": "flyio/fastify-functions",
+    "env": {
+      "APP_ENV": "production"
+    },
+    "services": [
+      {
+        "ports": [
+          {
+            "port": 443,
+            "handlers": [
+              "tls",
+              "http"
+            ]
+          },
+          {
+            "port": 80,
+            "handlers": [
+              "http"
+            ]
+          }
+        ],
+        "protocol": "tcp",
+        "internal_port": 8080
+      }
+    ]
+  },
+  "region": "syd"
+}
+```
+
 ## Testing
 
 ```bash
