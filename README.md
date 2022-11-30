@@ -48,14 +48,14 @@ $machines = FlyMachines::machines('my-fly-app')->list();
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
-$machines = FlyMachines::machines('my-fly-app')->get('148e127...');
+$machine = FlyMachines::machines('my-fly-app')->get('148e127...');
 ```
 
 #### Delete a Fly.io machine by their id
 ```php
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 
-$machines = FlyMachines::machines('my-fly-app')->delete('148e127...');
+FlyMachines::machines('my-fly-app')->delete('148e127...');
 ```
 
 #### Create a Fly.io machine
@@ -74,7 +74,8 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 $machine = FlyMachines::machines('my-fly-app')->create([
     'config' => [
         'image' => 'registry-1.docker.io/flyio/postgres:14.4',
-    ]
+    ],
+    'region' => 'fra',
 ]);
 ```
 
