@@ -36,57 +36,65 @@ return [
 ```
 
 ## Usage
+```php
+use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
+```
 
-#### List of implemented functions
 - List Machines of a Fly.io App:
-  - `FlyMachines::machines('my-fly-app')->list()`
+```php
+FlyMachines::machines('my-fly-app')->list()
+```
 - Launch a machine.
-  - `FlyMachines::machines('my-fly-app')->launch(machine: $config)`
+```php
+FlyMachines::machines('my-fly-app')->launch(machine: $config)
+```
 - Update a machine.
-  - `FlyMachines::machines('my-fly-app')->launch(machineId: "machineId", machine: $config, nonce: "nonce")`
+```php
+FlyMachines::machines('my-fly-app')->launch(machineId: "machineId", machine: $config, nonce: "nonce")
+```
 - Get a machine.
-  - `FlyMachines::machines('my-fly-app')->get(machineId: "machineId")`
+```php
+FlyMachines::machines('my-fly-app')->get(machineId: "machineId")
+```
 - Stop a machine.
-  - `FlyMachines::machines('my-fly-app')->stop(machineId: "machineId")`
+```php
+FlyMachines::machines('my-fly-app')->stop(machineId: "machineId")
+```
 - Start a machine.
-  - `FlyMachines::machines('my-fly-app')->start(machineId: "machineId")`
+```php
+FlyMachines::machines('my-fly-app')->start(machineId: "machineId")
+```
 - Send a signal to a machine.
-  - `FlyMachines::machines('my-fly-app')->signal(machineId: "machineId", signal: 9)`
+```php
+FlyMachines::machines('my-fly-app')->signal(machineId: "machineId", signal: 9)
+```
 - Kill a machine using the signal 9 (SIGKILL).
-  - `FlyMachines::machines('my-fly-app')->kill(machineId: "machineId")`
+```php
+FlyMachines::machines('my-fly-app')->kill(machineId: "machineId")
+```
 - Restart a machine.
-  - `FlyMachines::machines('my-fly-app')->kill(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)`
+```php
+FlyMachines::machines('my-fly-app')->kill(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)
+```
 - Find a lease for a machine.
-  - `FlyMachines::machines('my-fly-app')->findLease(machineId: "machineId")`
+```php
+FlyMachines::machines('my-fly-app')->findLease(machineId: "machineId")
+```
 - Acquire a lease for a machine.
-  - `FlyMachines::machines('my-fly-app')->acquireLease(machineId: "machineId", ttl: 30)`
+```php
+FlyMachines::machines('my-fly-app')->acquireLease(machineId: "machineId", ttl: 30)
+```
 - Release a lease of a machine.
-  - `FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", nonce: "nonce")`
+```php
+FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", nonce: "nonce")
+```
 - Wait for a machine.
-  - `FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", instanceId: "instanceId", state: "started", timeout: 30)`
+```php
+FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", instanceId: "instanceId", state: "started", timeout: 30)
+```
 - Destroy a machine.
-  - `FlyMachines::machines('my-fly-app')->destroy(machineId: "machineId", kill: true)`
-
-
-#### List Fly.io machines
 ```php
-use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
-
-$machines = FlyMachines::machines('my-fly-app')->list();
-```
-
-#### Get a Fly.io machine by their id
-```php
-use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
-
-$machine = FlyMachines::machines('my-fly-app')->get('148e127...');
-```
-
-#### Delete a Fly.io machine by their id
-```php
-use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
-
-FlyMachines::machines('my-fly-app')->delete('148e127...');
+FlyMachines::machines('my-fly-app')->destroy(machineId: "machineId", kill: true)
 ```
 
 #### Launch a Fly.io machine
@@ -312,41 +320,6 @@ echo json_encode(FlyMachines::machines('my-fly-app')->get('my-machine-id'));
       "updated_at": "2022-11-22T21:53:00Z"
     }
   ]
-}
-```
-
-### Example Create Machine
-```json
-{
-  "name": "machine-syd",
-  "config": {
-    "image": "flyio/fastify-functions",
-    "env": {
-      "APP_ENV": "production"
-    },
-    "services": [
-      {
-        "ports": [
-          {
-            "port": 443,
-            "handlers": [
-              "tls",
-              "http"
-            ]
-          },
-          {
-            "port": 80,
-            "handlers": [
-              "http"
-            ]
-          }
-        ],
-        "protocol": "tcp",
-        "internal_port": 8080
-      }
-    ]
-  },
-  "region": "syd"
 }
 ```
 
