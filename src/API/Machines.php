@@ -170,7 +170,7 @@ class Machines
     }
 
     /**
-     * Lease a machine.
+     * Acquire a lease of a machine.
      *
      * @param  string  $machineId The machine id.
      * @param  int  $ttl If ttl != -1, we send the value.
@@ -189,7 +189,7 @@ class Machines
     }
 
     /**
-     * Lease a machine.
+     * Release a lease of a machine.
      *
      * @param  string  $machineId The machine id.
      * @param  string  $nonce The nonce. If == '', we don't send it.

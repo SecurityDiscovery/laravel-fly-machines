@@ -37,13 +37,35 @@ return [
 
 ## Usage
 
-#### Functions
-- list()
-- launch($machineConfig)
-- get("machineId")
-- start("machineId")
-- stop("machineId")
-- delete("machineId")
+#### List of implemented functions
+- List Machines of a Fly.io App:
+  - `FlyMachines::machines('my-fly-app')->list()`
+- Launch a machine.
+  - `FlyMachines::machines('my-fly-app')->launch(machine: $config)`
+- Update a machine.
+  - `FlyMachines::machines('my-fly-app')->launch(machineId: "machineId", machine: $config, nonce: "nonce")`
+- Get a machine.
+  - `FlyMachines::machines('my-fly-app')->get(machineId: "machineId")`
+- Stop a machine.
+  - `FlyMachines::machines('my-fly-app')->stop(machineId: "machineId")`
+- Start a machine.
+  - `FlyMachines::machines('my-fly-app')->start(machineId: "machineId")`
+- Send a signal to a machine.
+  - `FlyMachines::machines('my-fly-app')->signal(machineId: "machineId", signal: 9)`
+- Kill a machine using the signal 9 (SIGKILL).
+  - `FlyMachines::machines('my-fly-app')->kill(machineId: "machineId")`
+- Restart a machine.
+  - `FlyMachines::machines('my-fly-app')->kill(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)`
+- Find a lease for a machine.
+  - `FlyMachines::machines('my-fly-app')->findLease(machineId: "machineId")`
+- Acquire a lease for a machine.
+  - `FlyMachines::machines('my-fly-app')->acquireLease(machineId: "machineId", ttl: 30)`
+- Release a lease of a machine.
+  - `FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", nonce: "nonce")`
+- Wait for a machine.
+  - `FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", instanceId: "instanceId", state: "started", timeout: 30)`
+- Destroy a machine.
+  - `FlyMachines::machines('my-fly-app')->destroy(machineId: "machineId", kill: true)`
 
 
 #### List Fly.io machines
