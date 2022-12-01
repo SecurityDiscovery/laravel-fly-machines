@@ -40,7 +40,7 @@ return [
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 ```
 
-#### List Machines of a Fly.io App:
+#### List machines of a Fly.io App:
 ```php
 FlyMachines::machines('my-fly-app')->list()
 ```

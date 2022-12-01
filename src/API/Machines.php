@@ -16,7 +16,7 @@ class Machines
     }
 
     /**
-     * List Machines of a Fly.io App.
+     * List machines of a Fly.io App.
      *
      * @return mixed
      *
