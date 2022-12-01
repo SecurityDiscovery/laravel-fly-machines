@@ -50,7 +50,7 @@ FlyMachines::machines('my-fly-app')->launch(machine: $config)
 ```
 #### Update a machine.
 ```php
-FlyMachines::machines('my-fly-app')->launch(machineId: "machineId", machine: $config, nonce: "nonce")
+FlyMachines::machines('my-fly-app')->update(machineId: "machineId", machine: $config, nonce: "nonce")
 ```
 #### Get a machine.
 ```php
