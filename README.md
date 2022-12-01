@@ -40,59 +40,59 @@ return [
 use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachines;
 ```
 
-- List Machines of a Fly.io App:
+#### List Machines of a Fly.io App:
 ```php
 FlyMachines::machines('my-fly-app')->list()
 ```
-- Launch a machine.
+#### Launch a machine.
 ```php
 FlyMachines::machines('my-fly-app')->launch(machine: $config)
 ```
-- Update a machine.
+#### Update a machine.
 ```php
 FlyMachines::machines('my-fly-app')->launch(machineId: "machineId", machine: $config, nonce: "nonce")
 ```
-- Get a machine.
+#### Get a machine.
 ```php
 FlyMachines::machines('my-fly-app')->get(machineId: "machineId")
 ```
-- Stop a machine.
+#### Stop a machine.
 ```php
 FlyMachines::machines('my-fly-app')->stop(machineId: "machineId")
 ```
-- Start a machine.
+#### Start a machine.
 ```php
 FlyMachines::machines('my-fly-app')->start(machineId: "machineId")
 ```
-- Send a signal to a machine.
+#### Send a signal to a machine.
 ```php
 FlyMachines::machines('my-fly-app')->signal(machineId: "machineId", signal: 9)
 ```
-- Kill a machine using the signal 9 (SIGKILL).
+#### Kill a machine using the signal 9 (SIGKILL).
 ```php
 FlyMachines::machines('my-fly-app')->kill(machineId: "machineId")
 ```
-- Restart a machine.
+#### Restart a machine.
 ```php
 FlyMachines::machines('my-fly-app')->kill(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)
 ```
-- Find a lease for a machine.
+#### Find a lease for a machine.
 ```php
 FlyMachines::machines('my-fly-app')->findLease(machineId: "machineId")
 ```
-- Acquire a lease for a machine.
+#### Acquire a lease for a machine.
 ```php
 FlyMachines::machines('my-fly-app')->acquireLease(machineId: "machineId", ttl: 30)
 ```
-- Release a lease of a machine.
+#### Release a lease of a machine.
 ```php
 FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", nonce: "nonce")
 ```
-- Wait for a machine.
+#### Wait for a machine.
 ```php
 FlyMachines::machines('my-fly-app')->releaseLease(machineId: "machineId", instanceId: "instanceId", state: "started", timeout: 30)
 ```
-- Destroy a machine.
+#### Destroy a machine.
 ```php
 FlyMachines::machines('my-fly-app')->destroy(machineId: "machineId", kill: true)
 ```
