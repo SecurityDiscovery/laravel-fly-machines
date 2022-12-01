@@ -68,13 +68,13 @@ FlyMachines::machines('my-fly-app')->start(machineId: "machineId")
 ```php
 FlyMachines::machines('my-fly-app')->signal(machineId: "machineId", signal: 9)
 ```
-#### Kill a machine using the signal 9 (SIGKILL).
+#### Kill a machine (uses the signal 9 (SIGKILL), the same as the above call).
 ```php
 FlyMachines::machines('my-fly-app')->kill(machineId: "machineId")
 ```
 #### Restart a machine.
 ```php
-FlyMachines::machines('my-fly-app')->kill(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)
+FlyMachines::machines('my-fly-app')->restart(machineId: "machineId", forceStop: true, timeout: 10, signal: 9)
 ```
 #### Find a lease for a machine.
 ```php
