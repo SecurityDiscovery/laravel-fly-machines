@@ -219,7 +219,7 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function wait(string $machineId, string $instanceId, string $state = "started", int $timeout = 30): mixed
+    public function wait(string $machineId, string $instanceId, string $state = 'started', int $timeout = 30): mixed
     {
         $queryParams = [
             'instance_id' => $instanceId,
