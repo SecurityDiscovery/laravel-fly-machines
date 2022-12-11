@@ -239,7 +239,8 @@ class Machines
     {
         $queryParams = [];
         if ($kill) {
-            $queryParams['kill'] = 'force';
+            $queryParams['kill'] = 'true';
+            $queryParams['force'] = 'true';
         }
 
         return $this->client->delete(url: '/machines/'.$machineId.'?'.http_build_query($queryParams));
