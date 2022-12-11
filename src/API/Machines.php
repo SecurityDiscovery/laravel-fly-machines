@@ -237,8 +237,11 @@ class Machines
      */
     public function destroy(string $machineId, bool $kill): mixed
     {
-        $queryParams = http_build_query(['kill' => $kill]);
+        $queryParams = [];
+        if ($kill) {
+            $queryParams['kill'] = 'force';
+        }
 
-        return $this->client->delete(url: '/machines/'.$machineId.'?'.$queryParams);
+        return $this->client->delete(url: '/machines/'.$machineId.'?'.http_build_query($queryParams));
     }
 }
