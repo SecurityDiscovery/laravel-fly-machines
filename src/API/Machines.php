@@ -29,7 +29,7 @@ class Machines
     /**
      * Get a machine.
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -41,7 +41,7 @@ class Machines
     /**
      * Launch a machine.
      *
-     * @param array $machine The machine config.
+     * @param  array  $machine The machine config.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -53,9 +53,9 @@ class Machines
     /**
      * Update a machine.
      *
-     * @param string $machineId The machine id.
-     * @param array $machine The machine config.
-     * @param string|null $nonce The nonce
+     * @param  string  $machineId The machine id.
+     * @param  array  $machine The machine config.
+     * @param  string|null  $nonce The nonce
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -74,7 +74,7 @@ class Machines
     /**
      * Stop a machine.
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -86,7 +86,7 @@ class Machines
     /**
      * Start a machine.
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -98,7 +98,7 @@ class Machines
     /**
      * Kill a machine using the signal 9 (SIGKILL).
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -110,8 +110,8 @@ class Machines
     /**
      * Send a signal to a machine.
      *
-     * @param string $machineId The machine id.
-     * @param int $signal The signal to send. E.g. SIGKILL = 9.
+     * @param  string  $machineId The machine id.
+     * @param  int  $signal The signal to send. E.g. SIGKILL = 9.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -125,10 +125,10 @@ class Machines
     /**
      * Restart a machine.
      *
-     * @param string $machineId The machine id.
-     * @param bool $forceStop Force stop the machine.
-     * @param int|null $timeout Timeout
-     * @param string|null $signal The signal
+     * @param  string  $machineId The machine id.
+     * @param  bool  $forceStop Force stop the machine.
+     * @param  int|null  $timeout Timeout
+     * @param  string|null  $signal The signal
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -146,7 +146,7 @@ class Machines
     /**
      * Find a lease for a machine.
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -158,8 +158,8 @@ class Machines
     /**
      * Acquire a lease of a machine.
      *
-     * @param string $machineId The machine id.
-     * @param int|null $ttl Seconds to lease individual machines while running deployment.
+     * @param  string  $machineId The machine id.
+     * @param  int|null  $ttl Seconds to lease individual machines while running deployment.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -175,7 +175,7 @@ class Machines
     /**
      * Release a lease of a machine.
      *
-     * @param string $machineId The machine id.
+     * @param  string  $machineId The machine id.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -193,10 +193,10 @@ class Machines
     /**
      * Wait for a machine.
      *
-     * @param string $machineId The machine id.
-     * @param string $instanceId The machine instance id.
-     * @param string $state The machine state to wait for. Default is "started".
-     * @param int $timeout How long to wait for the state.
+     * @param  string  $machineId The machine id.
+     * @param  string  $instanceId The machine instance id.
+     * @param  string  $state The machine state to wait for. Default is "started".
+     * @param  int  $timeout How long to wait for the state.
      *
      * @throws \Illuminate\Http\Client\RequestException
      */

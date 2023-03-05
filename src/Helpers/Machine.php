@@ -30,7 +30,7 @@ class Machine
     /**
      * The Docker image to run
      *
-     * @param string $image The image
+     * @param  string  $image The image
      */
     public function image(string $image): static
     {
@@ -42,7 +42,7 @@ class Machine
     /**
      * Unique name for this machine. If omitted, one is generated for you.
      *
-     * @param string $name Unique name for this machine
+     * @param  string  $name Unique name for this machine
      */
     public function name(string $name): static
     {
@@ -54,10 +54,10 @@ class Machine
     /**
      * Set guest options.
      *
-     * @param int|null $cpus Number of vCPUs (default 1)
-     * @param int|null $memory_mb Memory in megabytes as multiples of 256 (default 256)
-     * @param string|null $cpu_kind Memory in megabytes as multiples of 256 (default 256)
-     * @param array|null $kernel_args Optional array of strings. Arguments passed to the kernel
+     * @param  int|null  $cpus Number of vCPUs (default 1)
+     * @param  int|null  $memory_mb Memory in megabytes as multiples of 256 (default 256)
+     * @param  string|null  $cpu_kind Memory in megabytes as multiples of 256 (default 256)
+     * @param  array|null  $kernel_args Optional array of strings. Arguments passed to the kernel
      */
     public function guest(?int $cpus, ?int $memory_mb, ?string $cpu_kind, ?array $kernel_args): static
     {
@@ -75,7 +75,7 @@ class Machine
      * A named size for the VM, e.g. performance-2x or shared-cpu-2x.
      * Note: guest and size are mutually exclusive.
      *
-     * @param string $size E.g. performance-2x or shared-cpu-2x
+     * @param  string  $size E.g. performance-2x or shared-cpu-2x
      */
     public function size(string $size): static
     {
@@ -87,8 +87,8 @@ class Machine
     /**
      * Set an environment variable.
      *
-     * @param string $name The environment variable name
-     * @param string $value The environment variable value
+     * @param  string  $name The environment variable name
+     * @param  string  $value The environment variable value
      */
     public function env(string $name, string $value): static
     {
@@ -105,11 +105,11 @@ class Machine
      * Defining a processes to run within a VM.
      * The Machine will stop if any process exits without error.
      *
-     * @param string $name Process name
-     * @param array|null $entrypoint An array of strings. The process that will run
-     * @param array|null $cmd An array of strings. The arguments passed to the entrypoint
-     * @param array|null $env An object filled with key/value pairs to be set as environment variables
-     * @param string|null $user An optional user that the process runs under
+     * @param  string  $name Process name
+     * @param  array|null  $entrypoint An array of strings. The process that will run
+     * @param  array|null  $cmd An array of strings. The arguments passed to the entrypoint
+     * @param  array|null  $env An object filled with key/value pairs to be set as environment variables
+     * @param  string|null  $user An optional user that the process runs under
      */
     public function process(string $name, ?array $entrypoint, ?array $cmd, ?array $env, ?string $user): static
     {
@@ -132,10 +132,10 @@ class Machine
      * Defining a processes to run within a VM.
      * The Machine will stop if any process exits without error.
      *
-     * @param array|null $entrypoint An array of strings. The process that will run
-     * @param array|null $exec An array of strings. The process that will run
-     * @param array|null $cmd An array of strings. The arguments passed to the entrypoint
-     * @param bool|null $tty TTY
+     * @param  array|null  $entrypoint An array of strings. The process that will run
+     * @param  array|null  $exec An array of strings. The process that will run
+     * @param  array|null  $cmd An array of strings. The arguments passed to the entrypoint
+     * @param  bool|null  $tty TTY
      */
     public function init(?array $entrypoint, ?array $exec, ?array $cmd, ?bool $tty): static
     {
@@ -153,8 +153,7 @@ class Machine
      * Set the maximum retries of a machine.
      * MaxRetries is only relevant with the on-failure policy.
      *
-     * @param int $max_retries
-     * @param string $policy 'no' | 'on-failure' | 'always'
+     * @param  string  $policy 'no' | 'on-failure' | 'always'
      * @return $this
      */
     public function retries(int $max_retries, string $policy = 'on-failure'): static
@@ -172,8 +171,8 @@ class Machine
     /**
      * Reference a previously created persistent volume
      *
-     * @param string $volume_id The volume ID, visible in fly volumes list, i.e. vol_2n0l3vl60qpv635d
-     * @param string $path Absolute path on the VM where the volume should be mounted. i.e. /data
+     * @param  string  $volume_id The volume ID, visible in fly volumes list, i.e. vol_2n0l3vl60qpv635d
+     * @param  string  $path Absolute path on the VM where the volume should be mounted. i.e. /data
      */
     public function mount(string $volume_id, string $path): static
     {
@@ -191,7 +190,7 @@ class Machine
     /**
      * Runs machine at the given interval. Interval starts at time of machine creation
      *
-     * @param string $schedule Optionally one of hourly, daily, weekly, monthly.
+     * @param  string  $schedule Optionally one of hourly, daily, weekly, monthly.
      */
     public function schedule(string $schedule): static
     {
@@ -209,12 +208,10 @@ class Machine
 
     /**
      * Removes null values
-     * @param array $arr
-     * @return array
      */
     protected function filter_array(array $arr): array
     {
-        return array_filter($arr, fn ($item) => !is_null($arr));
+        return array_filter($arr, fn ($item) => ! is_null($arr));
     }
 
     /**
