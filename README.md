@@ -145,8 +145,8 @@ $machineConfig = Machine::builder()
         path: '/data'
     )
     
-    ->env(name: 'NAME_1', value: 'VALUE_1')  // Optional
-    ->env(name: 'NAME_2', value: 'VALUE_2')  // Optional
+    ->env(name: 'NAME_1', value: 'VALUE_1')    // Optional
+    ->env(name: 'NAME_2', value: 'VALUE_2')    // Optional
     
     ->auto_destroy(auto_destroy: True)         // Optional
     ->name(name: 'my_machine')                 // Optional
