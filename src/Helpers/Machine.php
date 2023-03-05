@@ -5,68 +5,46 @@ namespace SecurityDiscovery\LaravelFlyMachines\Helpers;
 class Machine
 {
     /**
-     * @var string The docker image
+     * @var array An object defining the machine configuration. Options
      */
-    private string $image;
+    protected array $config;
 
     /**
-     * @var string The Machine name
+     * @var string|null Unique name for this machine. If omitted, one is generated for you.
      */
-    private string $name = '';
+    protected ?string $name;
 
     /**
-     * @var string The Fly.io region.
+     * @var string|null The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
      */
-    private string $region = '';
+    protected ?string $region;
 
     /**
-     * @var array Environment variables
+     * Create a new Machine helper using the only required field, the image.
      */
-    private array $env = [];
-
-    /**
-     * @var array The restart policy
-     */
-    private array $restart = [];
-
-    /**
-     * @var array The container initial command.
-     */
-    private array $init = [];
-
-    /**
-     * @var array The machine itself. Cpu, Memory etc.
-     */
-    private array $guest = [];
-
-    /**
-     * @param  string  $image The docker image
-     */
-    public function __construct(string $image)
+    public static function builder(): Machine
     {
-        $this->image = $image;
+        return new Machine();
     }
 
     /**
-     * Set the image of the Fly machine.
+     * The Docker image to run
      *
-     * @param  string  $image
-     * @return $this
+     * @param string $image The image
      */
-    public function setImage(string $image): static
+    public function image(string $image): static
     {
-        $this->image = $image;
+        $this->config['image'] = $image;
 
         return $this;
     }
 
     /**
-     * Set the image of the Fly machine.
+     * Unique name for this machine. If omitted, one is generated for you.
      *
-     * @param  string  $name
-     * @return $this
+     * @param string $name Unique name for this machine
      */
-    public function setName(string $name): static
+    public function name(string $name): static
     {
         $this->name = $name;
 
@@ -74,15 +52,34 @@ class Machine
     }
 
     /**
-     * Set the maximum retries of a container.
+     * Set guest options.
      *
-     * @param  int  $max_retries
-     * @return $this
+     * @param int|null $cpus Number of vCPUs (default 1)
+     * @param int|null $memory_mb Memory in megabytes as multiples of 256 (default 256)
+     * @param string|null $cpu_kind Memory in megabytes as multiples of 256 (default 256)
+     * @param array|null $kernel_args Optional array of strings. Arguments passed to the kernel
      */
-    public function setMaxRetries(int $max_retries, string $policy = 'on-failure'): static
+    public function guest(?int $cpus, ?int $memory_mb, ?string $cpu_kind, ?array $kernel_args): static
     {
-        $this->restart['max_retries'] = $max_retries;
-        $this->restart['policy'] = $policy;
+        $this->config = $this->filter_array([
+            'cpus' => $cpus,
+            'memory_mb' => $memory_mb,
+            'cpu_kind' => $cpu_kind,
+            'kernel_args' => $kernel_args,
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * A named size for the VM, e.g. performance-2x or shared-cpu-2x.
+     * Note: guest and size are mutually exclusive.
+     *
+     * @param string $size E.g. performance-2x or shared-cpu-2x
+     */
+    public function size(string $size): static
+    {
+        $this->config['size'] = $size;
 
         return $this;
     }
@@ -90,76 +87,120 @@ class Machine
     /**
      * Set an environment variable.
      *
-     * @param  string  $name The environment variable name
-     * @param  string  $value The environment variable value
-     * @return $this
+     * @param string $name The environment variable name
+     * @param string $value The environment variable value
      */
-    public function setEnvironmentVariable(string $name, string $value): static
+    public function env(string $name, string $value): static
     {
-        $this->env[$name] = $value;
+        if (! array_key_exists('env', $this->config)) {
+            $this->config['env'] = [];
+        }
+
+        $this->config['env'][$name] = $value;
 
         return $this;
     }
 
     /**
-     * Set init cmd.
+     * Defining a processes to run within a VM.
+     * The Machine will stop if any process exits without error.
      *
-     * @param  array  $args
-     * @return $this
+     * @param string $name Process name
+     * @param array|null $entrypoint An array of strings. The process that will run
+     * @param array|null $cmd An array of strings. The arguments passed to the entrypoint
+     * @param array|null $env An object filled with key/value pairs to be set as environment variables
+     * @param string|null $user An optional user that the process runs under
      */
-    public function setInitCmd(array $args): static
+    public function process(string $name, ?array $entrypoint, ?array $cmd, ?array $env, ?string $user): static
     {
-        $this->init['cmd'] = $args;
+        if (! array_key_exists('processes', $this->config)) {
+            $this->config['processes'] = [];
+        }
+
+        $this->config['processes'][] = $this->filter_array([
+            'name' => $name,
+            'entrypoint' => $entrypoint,
+            'cmd' => $cmd,
+            'env' => $env,
+            'user' => $user,
+        ]);
 
         return $this;
     }
 
     /**
-     * Set the CPU count of the guest system.
+     * Defining a processes to run within a VM.
+     * The Machine will stop if any process exits without error.
      *
-     * @param  int  $cpus The count of CPUs.
-     * @return $this
+     * @param array|null $entrypoint An array of strings. The process that will run
+     * @param array|null $exec An array of strings. The process that will run
+     * @param array|null $cmd An array of strings. The arguments passed to the entrypoint
+     * @param bool|null $tty TTY
      */
-    public function setCPUs(int $cpus): static
+    public function init(?array $entrypoint, ?array $exec, ?array $cmd, ?bool $tty): static
     {
-        $this->guest['cpus'] = $cpus;
+        $this->config['init'] = $this->filter_array([
+            'entrypoint' => $entrypoint,
+            'exec' => $exec,
+            'cmd' => $cmd,
+            'tty' => $tty,
+        ]);
 
         return $this;
     }
 
     /**
-     * Set the CPU count of the guest system.
+     * Set the maximum retries of a machine.
+     * MaxRetries is only relevant with the on-failure policy.
      *
-     * @param  int  $memory_mb The memory in megabytes.
+     * @param int $max_retries
+     * @param string $policy 'no' | 'on-failure' | 'always'
      * @return $this
      */
-    public function setMemory(int $memory_mb): static
+    public function retries(int $max_retries, string $policy = 'on-failure'): static
     {
-        $this->guest['memory_mb'] = $memory_mb;
+        if (! array_key_exists('restart', $this->config)) {
+            $this->config['restart'] = [];
+        }
+
+        $this->config['restart']['max_retries'] = $max_retries;
+        $this->config['restart']['policy'] = $policy;
 
         return $this;
     }
 
     /**
-     * Set the CPU kind of the guest system.
+     * Reference a previously created persistent volume
      *
-     * @param  string  $cpu_kind The CPU kind of the system. Example: shared.
-     * @return $this
+     * @param string $volume_id The volume ID, visible in fly volumes list, i.e. vol_2n0l3vl60qpv635d
+     * @param string $path Absolute path on the VM where the volume should be mounted. i.e. /data
      */
-    public function setCPUKind(string $cpu_kind): static
+    public function mount(string $volume_id, string $path): static
     {
-        $this->guest['cpu_kind'] = $cpu_kind;
+        if (! array_key_exists('mounts', $this->config)) {
+            $this->config['mounts'] = [];
+        }
+        $this->config['mounts'][] = [
+            'volume' => $volume_id,
+            'path' => $path,
+        ];
 
         return $this;
     }
 
     /**
-     * Set the Fly.io region.
+     * Runs machine at the given interval. Interval starts at time of machine creation
      *
-     * @param  string  $region
-     * @return $this
+     * @param string $schedule Optionally one of hourly, daily, weekly, monthly.
      */
-    public function setRegion(string $region): static
+    public function schedule(string $schedule): static
+    {
+        $this->config['schedule'] = $schedule;
+
+        return $this;
+    }
+
+    public function region(string $region): static
     {
         $this->region = $region;
 
@@ -167,41 +208,25 @@ class Machine
     }
 
     /**
-     * Build the configuration. Useful for creating a Machine.
-     *
+     * Removes null values
+     * @param array $arr
      * @return array
      */
-    public function getConfig(): array
+    protected function filter_array(array $arr): array
     {
-        $config = [
-            'config' => [
-                'image' => $this->image,
-            ],
-        ];
+        return array_filter($arr, fn ($item) => !is_null($arr));
+    }
 
-        if (count($this->restart) > 0) {
-            $config['config']['restart'] = $this->restart;
-        }
-
-        if (count($this->guest) > 0) {
-            $config['config']['guest'] = $this->guest;
-        }
-
-        if (count($this->init) > 0) {
-            $config['config']['init'] = $this->init;
-        }
-
-        if (count($this->env) > 0) {
-            $config['config']['env'] = $this->env;
-        }
-
-        if (strlen($this->region) > 0) {
-            $config['region'] = $this->region;
-        }
-
-        if (strlen($this->name) > 0) {
-            $config['name'] = $this->name;
-        }
+    /**
+     * Build the configuration. Useful for creating a Machine.
+     */
+    public function toArray(): array
+    {
+        $config = $this->filter_array([
+            'name' => $this->name,
+            'region' => $this->region,
+        ]);
+        $config['config'] = $this->config;
 
         return $config;
     }

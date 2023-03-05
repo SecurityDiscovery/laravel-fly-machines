@@ -17,18 +17,14 @@ class HTTPClient extends PendingRequest
         );
 
         $this->baseUrl($baseUrl);
-        $this->withHeaders([
-            'Authorization' => 'Bearer '.config('fly-machines.token'),
-        ]);
+        $this->withToken(config('fly-machines.token'));
         $this->acceptJson();
     }
 
     /**
      * Issue a GET request to the given URL.
      *
-     * @param  string  $url
      * @param  array|string|null  $query
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -42,9 +38,7 @@ class HTTPClient extends PendingRequest
     /**
      * Issue a HEAD request to the given URL.
      *
-     * @param  string  $url
      * @param  array|string|null  $query
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -58,9 +52,7 @@ class HTTPClient extends PendingRequest
     /**
      * Issue a POST request to the given URL.
      *
-     * @param  string  $url
      * @param  array  $data
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -76,7 +68,6 @@ class HTTPClient extends PendingRequest
      *
      * @param  string  $url
      * @param  array  $data
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -92,7 +83,6 @@ class HTTPClient extends PendingRequest
      *
      * @param  string  $url
      * @param  array  $data
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -108,7 +98,6 @@ class HTTPClient extends PendingRequest
      *
      * @param  string  $url
      * @param  array  $data
-     * @return mixed
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
@@ -120,11 +109,6 @@ class HTTPClient extends PendingRequest
     }
 
     /**
-     * @param  string  $method
-     * @param  string  $url
-     * @param  array  $options
-     * @return mixed
-     *
      * @throws \Illuminate\Http\Client\RequestException
      * @throws \Exception
      */
