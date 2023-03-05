@@ -129,7 +129,6 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machineConfig = Machine::builder()
-    ->name(name: 'my_machine')                 // Optional
     ->image(                                             
         image: 'my.registry.io/test/test:14.4' // Required
     )
@@ -147,6 +146,12 @@ $machineConfig = Machine::builder()
         volume_id: 'vol_123',
         path: '/data'
     )
+    
+    ->env(name: 'NAME_1', value: 'VALUE_1')  // Optional
+    ->env(name: 'NAME_2', value: 'VALUE_2')  // Optional
+    
+    ->auto_destroy(auto_destroy: True)         // Optional
+    ->name(name: 'my_machine')                 // Optional
     ->schedule(schedule: 'daily')              // Optional
     ->region(region: 'fra')                    // Optional
     ->size(size: 'shared-cpu-1x' )             // Optional | WARNING: Use 'guest' or 'size'
@@ -155,10 +160,6 @@ $machineConfig = Machine::builder()
         memory_mb: 2*256,
         cpu_kind: 'shared',
         kernel_args: []
-    )
-    ->env(                                     // Optional
-        name: 'MY_FIRST_VARIABLE',
-        value: 'MY_FIRST_VALUE'
     )
     ->process()                                // TODO: Document this
     ->toArray();
