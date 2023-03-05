@@ -163,11 +163,6 @@ $machineConfig = Machine::builder()
     ->toArray();
 ```
 
-### Example `FlyMachines::machines('my-fly-app')->get('my-machine-id')`
-```php
-echo json_encode(FlyMachines::machines('my-fly-app')->get('my-machine-id'));
-```
-
 See more here [https://fly.io/docs/machines/working-with-machines/](https://fly.io/docs/machines/working-with-machines/).
 
 ## Testing
