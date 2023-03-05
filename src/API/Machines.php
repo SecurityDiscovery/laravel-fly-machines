@@ -59,7 +59,7 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function update(string $machineId, array $machine, ?string $nonce): mixed
+    public function update(string $machineId, array $machine, ?string $nonce = null): mixed
     {
         $headers = [];
         if ($nonce) {
@@ -132,7 +132,7 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function restart(string $machineId, bool $forceStop, ?int $timeout, ?string $signal): mixed
+    public function restart(string $machineId, bool $forceStop, ?int $timeout = null, ?string $signal = null): mixed
     {
         $query = http_build_query([
             'force_stop' => $forceStop,
@@ -163,7 +163,7 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function acquireLease(string $machineId, ?int $ttl): mixed
+    public function acquireLease(string $machineId, ?int $ttl = null): mixed
     {
         $query = http_build_query([
             'ttl' => $ttl,
@@ -179,7 +179,7 @@ class Machines
      *
      * @throws \Illuminate\Http\Client\RequestException
      */
-    public function releaseLease(string $machineId, ?string $nonce): mixed
+    public function releaseLease(string $machineId, ?string $nonce = null): mixed
     {
         $headers = [];
         if ($nonce) {

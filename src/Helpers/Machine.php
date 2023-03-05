@@ -12,12 +12,12 @@ class Machine
     /**
      * @var string|null Unique name for this machine. If omitted, one is generated for you.
      */
-    protected ?string $name;
+    protected ?string $name = null;
 
     /**
      * @var string|null The target region. Omitting this param launches in the same region as your WireGuard peer connection (somewhere near you).
      */
-    protected ?string $region;
+    protected ?string $region = null;
 
     /**
      * Create a new Machine helper using the only required field, the image.
@@ -59,7 +59,7 @@ class Machine
      * @param  string|null  $cpu_kind Memory in megabytes as multiples of 256 (default 256)
      * @param  array|null  $kernel_args Optional array of strings. Arguments passed to the kernel
      */
-    public function guest(?int $cpus, ?int $memory_mb, ?string $cpu_kind, ?array $kernel_args): static
+    public function guest(?int $cpus = null, ?int $memory_mb = null, ?string $cpu_kind = null, ?array $kernel_args = null): static
     {
         $this->config = $this->filter_array([
             'cpus' => $cpus,
@@ -111,7 +111,7 @@ class Machine
      * @param  array|null  $env An object filled with key/value pairs to be set as environment variables
      * @param  string|null  $user An optional user that the process runs under
      */
-    public function process(string $name, ?array $entrypoint, ?array $cmd, ?array $env, ?string $user): static
+    public function process(string $name, ?array $entrypoint = null, ?array $cmd = null, ?array $env = null, ?string $user = null): static
     {
         if (! array_key_exists('processes', $this->config)) {
             $this->config['processes'] = [];
@@ -137,7 +137,7 @@ class Machine
      * @param  array|null  $cmd An array of strings. The arguments passed to the entrypoint
      * @param  bool|null  $tty TTY
      */
-    public function init(?array $entrypoint, ?array $exec, ?array $cmd, ?bool $tty): static
+    public function init(?array $entrypoint = null, ?array $exec = null, ?array $cmd = null, ?bool $tty = null): static
     {
         $this->config['init'] = $this->filter_array([
             'entrypoint' => $entrypoint,
@@ -212,7 +212,7 @@ class Machine
      *
      * @return $this
      */
-    public function auto_destroy(bool $auto_destroy): static
+    public function auto_destroy(bool $auto_destroy = true): static
     {
         $this->config['auto_destroy'] = $auto_destroy;
 
