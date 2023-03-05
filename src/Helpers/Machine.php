@@ -208,6 +208,20 @@ class Machine
     }
 
     /**
+     * Auto destroy the machine.
+     * https://community.fly.io/t/fly-machines-automatically-delete/10452
+     *
+     * @param bool $auto_destroy
+     * @return $this
+     */
+    public function auto_destroy(bool $auto_destroy): static
+    {
+        $this->config['auto_destroy'] = $auto_destroy;
+
+        return $this;
+    }
+
+    /**
      * Removes null values
      * @param array $arr
      * @return array
