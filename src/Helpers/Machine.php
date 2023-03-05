@@ -61,7 +61,7 @@ class Machine
      */
     public function guest(?int $cpus = null, ?int $memory_mb = null, ?string $cpu_kind = null, ?array $kernel_args = null): static
     {
-        $this->config = $this->filter_array([
+        $this->config['guest'] = $this->filter_array([
             'cpus' => $cpus,
             'memory_mb' => $memory_mb,
             'cpu_kind' => $cpu_kind,
