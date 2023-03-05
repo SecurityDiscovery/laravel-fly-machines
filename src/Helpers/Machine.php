@@ -224,7 +224,7 @@ class Machine
      */
     protected function filter_array(array $arr): array
     {
-        return array_filter($arr, fn ($item) => ! is_null($arr));
+        return array_filter($arr, fn ($item) => ! is_null($item));
     }
 
     /**
