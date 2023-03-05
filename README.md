@@ -129,9 +129,7 @@ use SecurityDiscovery\LaravelFlyMachines\Facades\LaravelFlyMachines as FlyMachin
 use SecurityDiscovery\LaravelFlyMachines\Helpers\Machine;
 
 $machineConfig = Machine::builder()
-    ->image(                                             
-        image: 'my.registry.io/test/test:14.4' // Required
-    )
+    ->image(image: 'my.registry.io/a/b:14.4')  // Required
     ->init(                                    // Optional
         entrypoint: ['/bin/sh'],
         exec: ['exec'],
