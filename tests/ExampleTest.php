@@ -6,7 +6,6 @@ it('can test', function () {
     expect(true)->toBeTrue();
 });
 
-
 it('machine builder is empty', function () {
     $machine = Machine::builder()->toArray();
 
@@ -36,7 +35,7 @@ it('machine builder sets guest', function () {
         'config' => [
             'guest' => [
                 'cpus' => 2,
-                'memory_mb' => 10
+                'memory_mb' => 10,
             ],
         ],
     ]);
@@ -70,7 +69,6 @@ it('machine builder sets size', function () {
     expect($machine['config']['size'])->toBe('test');
 });
 
-
 it('properly builds env variables using an array', function () {
     $envs = [
         'MY_NAME' => 'MY_VALUE',
@@ -85,4 +83,3 @@ it('properly builds env variables using a name and value', function () {
 
     expect($machine->toArray()['config']['env'])->toEqual(['MY_NAME' => 'MY_VALUE']);
 });
-
