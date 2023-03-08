@@ -7,7 +7,7 @@ class Machine
     /**
      * @var array An object defining the machine configuration. Options
      */
-    protected array $config;
+    protected array $config = [];
 
     /**
      * @var string|null Unique name for this machine. If omitted, one is generated for you.
@@ -86,17 +86,23 @@ class Machine
 
     /**
      * Set an environment variable.
+     * Either using $name, $value or $envs.
      *
-     * @param  string  $name The environment variable name
-     * @param  string  $value The environment variable value
+     * @param  string|null  $name The environment variable name
+     * @param  string|null  $value The environment variable value
      */
-    public function env(string $name, string $value): static
+    public function env(?string $name = null, ?string $value = null, ?array $envs = null): static
     {
         if (! array_key_exists('env', $this->config)) {
             $this->config['env'] = [];
         }
-
-        $this->config['env'][$name] = $value;
+        if ($name && $value) {
+            $this->config['env'][$name] = $value;
+        } elseif ($envs) {
+            foreach ($envs as $key => $value) {
+                $this->config['env'][$key] = $value;
+            }
+        }
 
         return $this;
     }
